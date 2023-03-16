@@ -15,7 +15,6 @@ public class CallbackTest {
 
     @BeforeAll
     static void setUpAll() {
-        //System.setProperty("web-driver.chrome.driver", "./driver/win/chromedriver.exe");
         WebDriverManager.chromedriver().setup();
     }
 
@@ -38,12 +37,12 @@ public class CallbackTest {
     @Test
     void shouldTest() {
         driver.get("http://localhost:9999/");
-        driver.findElements(By.tagName("input")).get(0).sendKeys("Карлов Карл");
-        driver.findElements(By.className("input__control")).get(1).sendKeys("+79998882211");
-        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Карлов-Иванов Карл");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79998882211");
+        driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.className("button__text")).click();
         String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-        String actual = driver.findElement(By.tagName("p")).getText().trim();
+        String actual = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
         assertEquals(expected, actual);
     }
 }
